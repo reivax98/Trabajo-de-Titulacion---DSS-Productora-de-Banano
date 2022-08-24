@@ -1,0 +1,183 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Exportadoras</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                    <li class="breadcrumb-item active">Exportadoras</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary" *ngIf="crud">
+                    <div class="card-header">
+                        <h3 class="card-title" *ngIf="add">Agregar exportadora</h3>
+                        <h3 class="card-title" *ngIf="!add">Editar exportadora {{exportadora.exp_id}}</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" (click)="crud=false"><i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form #exportadoraForm="ngForm">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" name="exp_nombre" #exp_nombre="ngModel"
+                                    [(ngModel)]="exportadora.exp_nombre" placeholder="Nombre">
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <input type="text" class="form-control" name="exp_descripcion"
+                                    #exp_descripcion="ngModel" [(ngModel)]="exportadora.exp_descripcion"
+                                    placeholder="Descripción" />
+                            </div>
+                            <div class="form-group">
+                                <label>Ruc</label>
+                                <input type="text" class="form-control" name="exp_ruc" #exp_ruc="ngModel"
+                                    [(ngModel)]="exportadora.exp_ruc" placeholder="Ruc">
+                            </div>
+                            <div class="form-group">
+                                <label>Dirección</label>
+                                <input type="text" class="form-control" name="exp_direccion" #exp_direccion="ngModel"
+                                    [(ngModel)]="exportadora.exp_direccion" placeholder="Dirección">
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono 1</label>
+                                <input type="text" class="form-control" name="exp_telefono1" #exp_telefono1="ngModel"
+                                    [(ngModel)]="exportadora.exp_telefono1" placeholder="Teléfono 1">
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono 2</label>
+                                <input type="text" class="form-control" name="exp_telefono2" #exp_telefono2="ngModel"
+                                    [(ngModel)]="exportadora.exp_telefono2" placeholder="Teléfono 2">
+                            </div>
+                            <button *ngIf="add" type="button" class="btn bg-primary"
+                                (click)="addExportadora(exportadoraForm)">
+                                <i class="fas fa-plus"></i> Agregar exportadora
+                            </button>
+                            <button *ngIf="!add" type="button" class="btn bg-primary"
+                                (click)="editExportadora(exportadoraForm, exportadora.exp_id)">
+                                <i class="fas fa-edit"></i> Editar exportadora
+                            </button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabla de exportadoras</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" title="Agregar" (click)="actions('add', null)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Ruc</th>
+                                    <th>Dirección</th>
+                                    <th>Teléfono 1</th>
+                                    <th>Teléfono 2</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let e of exportadora2 | paginate: { itemsPerPage: 10, currentPage: page }">
+                                    <td>{{e.exp_id}}</td>
+                                    <td>{{e.exp_nombre}}</td>
+                                    <td>{{e.exp_descripcion}}</td>
+                                    <td>{{e.exp_ruc}}</td>
+                                    <td>{{e.exp_direccion}}</td>
+                                    <td>{{e.exp_telefono1}}</td>
+                                    <td>{{e.exp_telefono2}}</td>
+
+                                    <td>
+                                        <a> {{""}}</a>
+                                        <a title="Editar" (click)="actions('edit', e.exp_id)"
+                                            class="btn btn-xs bg-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a> {{""}}</a>
+                                        <a *ngIf="identity.us_rol == 'ADMIN'" title="Eliminar" (click)="guardarTempId(e.exp_id)"
+                                            class="btn btn-xs bg-danger" data-toggle="modal" data-target="#modal-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                        <a> {{""}}</a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Ruc</th>
+                                    <th>Dirección</th>
+                                    <th>Teléfono 1</th>
+                                    <th>Teléfono 2</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <ul class="m-0 float-right">
+                            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                                nextLabel="Siguiente"></pagination-controls>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+
+    <div class="modal fade" id="modal-sm">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content bg-danger">
+                <div class="modal-header">
+                    <h4 class="modal-title">Borrar exportadora</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de borrar la exportadora?</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+                    <button type="button" (click)="deleteExportadora(temp_id)" class="btn btn-outline-light"
+                        data-dismiss="modal">Borrar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>

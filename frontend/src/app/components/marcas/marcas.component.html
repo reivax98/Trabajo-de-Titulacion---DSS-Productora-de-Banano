@@ -1,0 +1,143 @@
+<section class="content-header">
+  <div class="container-fluid">
+      <div class="row mb-2">
+          <div class="col-sm-6">
+              <h1>Marcas</h1>
+          </div>
+          <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                  <li class="breadcrumb-item active">Marcas</li>
+              </ol>
+          </div>
+      </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-12">
+              <div class="card card-primary" *ngIf="crud">
+                  <div class="card-header">
+                      <h3 class="card-title" *ngIf="add">Agregar marca</h3>
+                      <h3 class="card-title" *ngIf="!add">Editar marca {{marca.mar_id}}</h3>
+                      <div class="card-tools">
+                          <button type="button" class="btn btn-tool" (click)="crud=false"><i class="fas fa-times"></i>
+                          </button>
+                      </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                      <form #marcaForm="ngForm">
+                          <div class="form-group">
+                              <label>Nombre</label>
+                              <input type="text" class="form-control" name="exp_nombre" #exp_nombre="ngModel"
+                                  [(ngModel)]="marca.mar_nombre" placeholder="Nombre">
+                          </div>
+                          <button *ngIf="add" type="button" class="btn bg-primary" (click)="addMarca(marcaForm)">
+                              <i class="fas fa-plus"></i> Agregar marca
+                          </button>
+                          <button *ngIf="!add" type="button" class="btn bg-primary"
+                              (click)="editMarca(marcaForm, marca.mar_id)">
+                              <i class="fas fa-edit"></i> Editar marca
+                          </button>
+                      </form>
+                  </div>
+                  <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+
+              <div class="card card-primary">
+                  <div class="card-header">
+                      <h3 class="card-title">Tabla de marca</h3>
+                      <div class="card-tools">
+                          <button type="button" class="btn btn-tool" title="Agregar" (click)="actions('add', null)">
+                              <i class="fas fa-plus"></i>
+                          </button>
+                      </div>
+                  </div>
+
+                  <!-- /.card-header -->
+                  <div class="card-body table-responsive p-0">
+                      <table class="table table-bordered text-center">
+                          <thead>
+                              <tr>
+                                  <th>Id</th>
+                                  <th>Nombre</th>
+                                  <th>Acciones</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let m of marca2 | paginate: { itemsPerPage: 10, currentPage: page }">
+                                  <td>{{m.mar_id}}</td>
+                                  <td>{{m.mar_nombre}}</td>
+
+                                  <td>
+                                      <a> {{""}}</a>
+                                      <a title="Editar" (click)="actions('edit', m.mar_id)"
+                                          class="btn btn-xs bg-warning">
+                                          <i class="fas fa-edit"></i>
+                                      </a>
+                                      <a> {{""}}</a>
+                                      <a *ngIf="identity.us_rol == 'ADMIN'" title="Eliminar" (click)="guardarTempId(m.mar_id)" class="btn btn-xs bg-danger"
+                                          data-toggle="modal" data-target="#modal-sm">
+                                          <i class="fas fa-trash"></i>
+                                      </a>
+                                  </td>
+                              </tr>
+
+                          </tbody>
+                          <tfoot>
+                              <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Acciones</th>
+                              </tr>
+                          </tfoot>
+                      </table>
+
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer clearfix">
+                    <ul class="m-0 float-right">
+                        <pagination-controls 
+                        (pageChange)="page = $event" 
+                        previousLabel="Anterior"
+                        nextLabel="Siguiente"
+                        ></pagination-controls>
+                    </ul>
+                  </div>
+              </div>
+              <!-- /.card -->
+          </div>
+          <!-- /.col -->
+      </div>
+      <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+
+  <div class="modal fade" id="modal-sm">
+      <div class="modal-dialog modal-sm">
+          <div class="modal-content bg-danger">
+              <div class="modal-header">
+                  <h4 class="modal-title">Borrar marca</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <p>¿Está seguro de borrar la marca?</p>
+              </div>
+              <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+                  <button type="button" (click)="deleteMarca(temp_id)" class="btn btn-outline-light"
+                      data-dismiss="modal">Borrar</button>
+              </div>
+          </div>
+          <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+  </div>
+</section>

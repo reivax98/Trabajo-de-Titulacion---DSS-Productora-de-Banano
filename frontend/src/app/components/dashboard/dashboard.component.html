@@ -1,0 +1,165 @@
+<div class="wrapper">
+
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Dashboard</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="description-block border-right">
+            <span class="description-percentage text-success"><i class="fas fa-caret-up"></i></span>
+            <h5 class="description-header">$ {{ing_rec}}</h5>
+            <span class="description-text">Ingresos último mes</span>
+          </div>
+          <!-- /.description-block -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3">
+          <div class="description-block border-right">
+            <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>$ {{ma_prov_tot}}</span>
+            <h5 class="description-header">{{ma_prov_nom}}</h5>
+            <span class="description-text">Proveedor más usado</span>
+          </div>
+          <!-- /.description-block -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3">
+          <div class="description-block border-right">
+            <span class="description-percentage text-success"><i class="fas fa-caret-up"></i></span>
+            <h5 class="description-header">$ {{ing_anual_tot}}</h5>
+            <span class="description-text">Ingresos totales del año {{ing_anual_anio}}</span>
+          </div>
+          <!-- /.description-block -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3">
+          <div class="description-block">
+            <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i></span>
+            <h5 class="description-header">$ {{eg_rec}}</h5>
+            <span class="description-text">Egresos último mes</span>
+          </div>
+          <!-- /.description-block -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header border-0">
+              <label> 
+                Mostrar gráficos en: 
+              </label>
+              <div class="d-flex justify-content-between">
+                <select name="semana" [(ngModel)]="tipo_grafico" (change)="getGraficos2(tipo_grafico, anio)"
+                  class="custom-select form-control-border" required>
+                  <option value="Semana">Semanas</option>
+                  <option value="Mes">Meses</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header border-0">
+              <label> 
+                Seleccione año de graficos: 
+              </label>
+              <div class="d-flex justify-content-between"> 
+                <select name="anio" class="custom-select form-control-border" [(ngModel)]="anio" 
+                (change)="getGraficos2(tipo_grafico, anio)" required>
+                  <option value=2020>2020</option>
+                  <option value=2021>2021</option>
+                  <option value=2022>2022</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header border-0">
+              <div class="d-flex justify-content-between">
+                <h3 class="card-title">Ingresos</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="d-flex">
+                <p class="d-flex flex-column">
+                </p>
+                <p class="ml-auto d-flex flex-column text-right">
+                </p>
+              </div>
+              <!-- /.d-flex -->
+
+              <div class="position-relative mb-4">
+                <canvas *ngIf="tipo_grafico==='Semana'" id="myChart" width="700" height="250" #mychart></canvas>
+                <canvas *ngIf="tipo_grafico==='Mes'" id="myChartn" width="700" height="250" #mychartn></canvas>
+              </div>
+              <div style="width:100%;">
+
+              </div>
+
+              <div class="d-flex flex-row justify-content-end">
+                <span class="mr-2">
+                  <i class="fas fa-square text-primary"></i> {{anio}}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header border-0">
+              <div class="d-flex justify-content-between">
+                <h3 class="card-title">Egresos</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="d-flex">
+                <p class="d-flex flex-column">
+                </p>
+                <p class="ml-auto d-flex flex-column text-right">
+                </p>
+              </div>
+              <!-- /.d-flex -->
+
+              <div class="position-relative mb-4">
+                <canvas *ngIf="tipo_grafico==='Semana'" id="mychart2" width="700" height="250" #mychart2></canvas>
+                <canvas *ngIf="tipo_grafico==='Mes'" id="mychart2n" width="700" height="250" #mychart2n></canvas>
+              </div>
+
+              <div class="d-flex flex-row justify-content-end">
+                <span class="mr-2">
+                  <i class="fas fa-square text-gray"></i> {{anio}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container-fluid -->
+
+  </div>
+  <!-- /.content -->
+</div>
+
+<!-- ./wrapper -->

@@ -1,0 +1,339 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Facturas Proveedor</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                    <li class="breadcrumb-item active">Facturas Proveedor</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary" *ngIf="crud">
+                    <div class="card-header">
+                        <h3 class="card-title" *ngIf="add">Agregar factura proveedor</h3>
+                        <h3 class="card-title" *ngIf="!add">Editar factura proveedor Nro {{facproveedor.facprov_id}}</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" (click)="crud=false"><i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form #facproveedorForm="ngForm">
+                            <div class="form-group">
+                                <label>Id</label>
+                                <input *ngIf="add"type="text" class="form-control" name="id" #facprov_id="ngModel"
+                                    [(ngModel)]="facproveedor.facprov_id" placeholder="ID">
+                                <input *ngIf="!add"type="text" class="form-control" name="id" #facprov_id="ngModel"
+                                    [(ngModel)]="facproveedor.facprov_id" placeholder="ID" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Proveedor</label>
+                                <select name="exp_nombre" [(ngModel)]="facproveedor.prov_nombre" class="form-control">
+                                    <option value={{p.prov_nombre}} *ngFor="let p of proveedor" >{{p.prov_nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Semana</label>
+                                    <select name="semana" [(ngModel)]="facproveedor.facprov_semana" class="form-control" required>
+                                        <option value={{s}} *ngFor="let s of semanas" >{{s}}</option>
+                                    </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Fecha</label>
+                                <input type="date" class="form-control" name="exp_ruc" #facprov_fecha="ngModel"
+                                    [(ngModel)]="facproveedor.fecha" placeholder="Fecha">
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <input type="text" class="form-control" name="exp_direccion" #facprov_descripcion="ngModel"
+                                    [(ngModel)]="facproveedor.facprov_descripcion" placeholder="Descripción">
+                            </div>
+                            <div class="form-group">
+                                <label>Fase</label>
+                                <select name="rol" [(ngModel)]="facproveedor.facprov_fase" class="form-control" required>
+                                    <option value="Siembra">Siembra</option>
+                                    <option value="Cuidado">Cuidado</option>
+                                    <option value="Otros">Otros</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Observación</label>
+                                <input type="text" class="form-control" name="observacion" #facprov_observacion="ngModel"
+                                    [(ngModel)]="facproveedor.facprov_observacion" placeholder="Observación">
+                            </div>
+                            <div class="form-group">
+                                <label>Descuento</label>
+                                <input type="number" class="form-control" name="descuento" #facprov_descuento="ngModel"
+                                    [(ngModel)]="facproveedor.facprov_descuento" placeholder="Descuento">
+                            </div>
+                            <div class="form-group">
+                                <label>Iva</label>
+                                <input type="number" class="form-control" name="iva" #facprov_iva="ngModel"
+                                    [(ngModel)]="facproveedor.facprov_iva" placeholder="Iva">
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select name="status" [(ngModel)]="facproveedor.facprov_status" class="form-control" required>
+                                    <option value="Cancelada">Cancelada</option>
+                                    <option value="Pendiente">Pendiente</option>
+                                </select>
+                            </div>
+                            <button *ngIf="add" type="button" class="btn bg-primary" (click)="addFacProveedor(facproveedorForm)">
+                                <i class="fas fa-plus"></i> Agregar factura de proveedor
+                            </button>
+                            <button *ngIf="!add" type="button" class="btn bg-primary"
+                                (click)="editFacProveedor(facproveedorForm, facproveedor.facprov_id)">
+                                <i class="fas fa-edit"></i> Editar factura de proveedor
+                            </button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+                <!--AGREGAR DETALLE-->
+                <div class="card card-primary" *ngIf="crud_det">
+                    <div class="card-header">
+                        <h3 class="card-title" *ngIf="add_det">Agregar detalle factura proveedor Nro {{facproveedor.facprov_id}}</h3>
+                        <h3 class="card-title" *ngIf="!add_det">Editar detalle factura proveedor Nro {{facproveedor.facprov_id}}</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" (click)="crud_det=false"><i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form #facproveedordetForm="ngForm">
+                            <div class="form-group">
+                                <label>Insumo</label>
+                                <input type="text" class="form-control" name="id" #facprov_id="ngModel"
+                                    [(ngModel)]="detalle2.facprovdet_insumo" placeholder="Insumo">
+                            </div>
+                            <div class="form-group">
+                                <label>Servicio</label>
+                                <input type="text" class="form-control" name="exp_nombre" #prov_id="ngModel"
+                                    [(ngModel)]="detalle2.facprovdet_servicio" placeholder="Servicio">
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <input type="text" class="form-control" name="exp_descripcion" #facprov_semana="ngModel"
+                                    [(ngModel)]="detalle2.facprovdet_descripcion" placeholder="Descripción" />
+                            </div>
+                            <div class="form-group">
+                                <label>Cantidad</label>
+                                <input type="number" class="form-control" name="exp_ruc" #facprov_fecha="ngModel"
+                                    [(ngModel)]="detalle2.facprovdet_cantidad" placeholder="Cantidad">
+                            </div>
+                            <div class="form-group">
+                                <label>Precio unitario</label>
+                                <input type="number" class="form-control" name="exp_direccion" #facprov_descripcion="ngModel"
+                                    [(ngModel)]="detalle2.facprovdet_precio_unitario" placeholder="Precio unitario">
+                            </div>
+                            <button *ngIf="add_det" type="button" class="btn bg-primary" (click)="addFacProveedorDet(facproveedordetForm)">
+                                <i class="fas fa-plus"></i> Agregar detalle factura de proveedor
+                            </button>
+                            <button *ngIf="!add_det" type="button" class="btn bg-primary"
+                                (click)="editFacProveedorDet(facproveedordetForm, facproveedor.facprov_id)">
+                                <i class="fas fa-edit"></i> Editar detalle factura de proveedor
+                            </button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabla de factura proveedor</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" title="Agregar" (click)="actions('add', null)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Proveedor</th>
+                                    <th>Semana</th>
+                                    <th>Fecha</th>
+                                    <th>Descripción</th>
+                                    <th>Fase</th>
+                                    <th>Observación</th>
+                                    <th>Descuento</th>
+                                    <th>Iva</th>
+                                    <th>Status</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let f of facproveedor2 | paginate: { itemsPerPage: 10, currentPage: page }">
+                                    <td>{{f.facprov_id}}</td>
+                                    <td>{{f.prov_nombre}}</td>
+                                    <td>{{f.facprov_semana}}</td>
+                                    <td>{{f.fecha}}</td>
+                                    <td>{{f.facprov_descripcion}}</td>
+                                    <td>{{f.facprov_fase}}</td>
+                                    <td>{{f.facprov_observacion}}</td>
+                                    <td>{{f.facprov_descuento}}</td>
+                                    <td>{{f.facprov_iva}}</td>
+                                    <td>{{f.facprov_status}}</td>
+
+                                    <td>
+                                        <a> {{""}}</a>
+                                        <a title="Editar" (click)="actions('edit', f.facprov_id)"
+                                            class="btn btn-xs bg-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a> {{""}}</a>
+                                        <a title="Agregar detalle" 
+                                            class="btn btn-xs bg-gray" (click)="actionsDet('add', f.facprov_id, null)">
+                                            <i class="fas fa-clipboard-list"></i>
+                                        </a>
+                                        <a> {{""}}</a>
+                                        <a title="Ver detalles" 
+                                            class="btn btn-xs bg-primary" (click)="detalleFacProv(f.facprov_id)" data-toggle="modal" data-target="#modal-det">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a> {{""}}</a>
+                                        <a *ngIf="identity.us_rol == 'ADMIN'" title="Eliminar" (click)="guardarTempId(f.facprov_id)" class="btn btn-xs bg-danger"
+                                            data-toggle="modal" data-target="#modal-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Proveedor</th>
+                                    <th>Semana</th>
+                                    <th>Fecha</th>
+                                    <th>Descripción</th>
+                                    <th>Fase</th>
+                                    <th>Observación</th>
+                                    <th>Descuento</th>
+                                    <th>Iva</th>
+                                    <th>Status</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <ul class="m-0 float-right">
+                            <pagination-controls 
+                            (pageChange)="page = $event" 
+                            previousLabel="Anterior"
+                            nextLabel="Siguiente"
+                            ></pagination-controls>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+
+    <div class="modal fade" id="modal-sm">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content bg-danger">
+                <div class="modal-header">
+                    <h4 class="modal-title">Borrar factura proveedor</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de borrar la factura proveedor?</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+                    <button type="button" (click)="deleteFacProveedor(temp_id)" class="btn btn-outline-light"
+                        data-dismiss="modal">Borrar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="modal-det">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content bg-primary">
+                <div class="modal-header">
+                    <h4 class="modal-title">Detalle factura proveedor {{det_id}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <th>Insumo</th>
+                                    <th>Servicio</th>
+                                    <th>Descripción</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio unitario</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let d of detalle">
+                                    <td>{{d.facprovdet_insumo}}</td>
+                                    <td>{{d.facprovdet_servicio}}</td>
+                                    <td>{{d.facprovdet_descripcion}}</td>
+                                    <td>{{d.facprovdet_cantidad}}</td>
+                                    <td>{{d.facprovdet_precio_unitario}}</td>
+
+                                    <td>
+                                        <a title="Editar" (click)="actionsDet('edit', d.facprov_id, d)"
+                                            class="btn btn-xs bg-warning" data-dismiss="modal" aria-label="Close">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a> {{""}}</a>
+                                        <a title="Eliminar" (click)="deleteFacProveedorDetalle(d)" class="btn btn-xs bg-danger" data-dismiss="modal" aria-label="Close">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+                    <h4>Valor total: {{vtotal}}</h4>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>

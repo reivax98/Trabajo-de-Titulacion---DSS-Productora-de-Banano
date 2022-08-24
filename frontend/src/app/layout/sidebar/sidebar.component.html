@@ -1,0 +1,153 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="#" class="brand-link">
+    <img src="assets/img/logo.png" alt="TierraPrometida Logo" class="brand-image"
+      style="opacity: .8">
+    <span class="brand-text font-weight-light"><b>Tierra</b> Prometida</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="info">
+        <a><b>Bienvenido/a! </b><br>
+          {{n_user}}</a>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+        <li class="nav-item">
+          <a [routerLink]="['dashboard']" class="nav-link" routerLinkActive="active">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Dashboard
+            </p>
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a [routerLink]="['/trazabilidad']" class="nav-link" routerLinkActive="active">
+            <i class="nav-icon fas fa-chart-bar"></i>
+            <p>
+              Trazabilidad
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+              Tablas
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a [routerLink]="['empleado']" class="nav-link" routerLinkActive="active">
+                <i class="fas fa-th-list nav-icon"></i>
+                <p>Empleados</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/exportadora']" class="nav-link" routerLinkActive="active">
+                <i class="fas fa-th-list nav-icon"></i>
+                <p>Exportadoras</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/hacienda']" class="nav-link" routerLinkActive="active">
+                <i class="fas fa-th-list nav-icon"></i>
+                <p>Haciendas</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['marcas']" class="nav-link" routerLinkActive="active">
+                <i class="fas fa-th-list nav-icon"></i>
+                <p>Marcas</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/tipo-caja']" class="nav-link" routerLinkActive="active">
+                <i class="fas fa-th-list nav-icon"></i>
+                <p>Tipo de cajas</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/proveedor']" class="nav-link" routerLinkActive="active">
+                <i class="fas fa-th-list nav-icon"></i>
+                <p>Proveedores</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" routerLinkActive="active">
+            <i class="nav-icon fas fa-angle-double-up"><i class="nav-icon fas fa-dollar-sign"></i></i>
+            <p>
+              Ingresos
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a [routerLink]="['/facturacion']" class="nav-link" routerLinkActive="active">
+                <i class="fas fa-list-alt nav-icon"></i>
+                <p>Facturación</p>
+              </a>
+            </li>
+            
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-angle-double-down"><i class="nav-icon fas fa-dollar-sign"></i></i>
+            <p>
+              Egresos
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a [routerLink]="['/fac-proveedor']" class="nav-link" routerLinkActive="active">
+                <i class="fas fa-list-alt nav-icon"></i>
+                <p>Facturas proveedor</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/pago']" class="nav-link" routerLinkActive="active">
+                <i class="fas fa-list-alt nav-icon"></i>
+                <p>Pagos</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li *ngIf="identity.us_rol==='ADMIN'" class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-user"></i>
+            <p>
+              Usuarios
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a [routerLink]="['/lista-usuario']" class="nav-link" routerLinkActive="active">
+                <i class="nav-icon fas fa-user-cog"></i>
+                <p>Lista de usuarios</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

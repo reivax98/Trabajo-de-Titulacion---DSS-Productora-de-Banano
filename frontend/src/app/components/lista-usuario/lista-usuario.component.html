@@ -1,0 +1,262 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Lista de usuarios</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                    <li class="breadcrumb-item active">Usuarios</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary" *ngIf="crud">
+                    <div class="card-header">
+                        <h3 class="card-title" *ngIf="add">Agregar usuario</h3>
+                        <h3 class="card-title" *ngIf="!add">Editar usuario {{usuario.us_id}}</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" (click)="crud=false"><i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form #usuarioForm="ngForm">
+                            <div class="form-group">
+                                <label>Nombres</label>
+                                <input *ngIf="add" type="text" class="form-control" name="us_nombres" #exp_nombre="ngModel"
+                                    [(ngModel)]="usuario.us_nombres" placeholder="Nombre">
+                                <input *ngIf="!add && identity.us_id == usuario.us_id" type="text" class="form-control" name="us_nombres" #exp_nombre="ngModel"
+                                    [(ngModel)]="usuario.us_nombres" placeholder="Nombre">
+                                <input *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol != 'ADMIN'" type="text" class="form-control" name="us_nombres" #exp_nombre="ngModel"
+                                    [(ngModel)]="usuario.us_nombres" placeholder="Nombre">
+                                <input *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol == 'ADMIN'" type="text" class="form-control" name="us_nombres" #exp_nombre="ngModel"
+                                    [(ngModel)]="usuario.us_nombres" placeholder="Nombre" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Apellidos</label>
+                                <input *ngIf="add" type="text" class="form-control" name="us_apellidos" #exp_descripcion="ngModel"
+                                    [(ngModel)]="usuario.us_apellidos" placeholder="Apellidos" />
+                                <input *ngIf="!add && identity.us_id == usuario.us_id" type="text" class="form-control" name="us_apellidos" #exp_descripcion="ngModel"
+                                    [(ngModel)]="usuario.us_apellidos" placeholder="Apellidos" />
+                                <input *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol != 'ADMIN'" type="text" class="form-control" name="us_apellidos" #exp_descripcion="ngModel"
+                                    [(ngModel)]="usuario.us_apellidos" placeholder="Apellidos" />
+                                <input *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol == 'ADMIN'" type="text" class="form-control" name="us_apellidos" #exp_descripcion="ngModel"
+                                    [(ngModel)]="usuario.us_apellidos" placeholder="Apellidos" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Correo</label>
+                                <input *ngIf="add" type="text" class="form-control" name="us_correo" #exp_ruc="ngModel"
+                                    [(ngModel)]="usuario.us_correo" placeholder="Correo">
+                                <input *ngIf="!add && identity.us_id == usuario.us_id" type="text" class="form-control" name="us_correo" #exp_ruc="ngModel"
+                                    [(ngModel)]="usuario.us_correo" placeholder="Correo">
+                                <input *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol != 'ADMIN'" type="text" class="form-control" name="us_correo" #exp_ruc="ngModel"
+                                    [(ngModel)]="usuario.us_correo" placeholder="Correo">
+                                <input *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol == 'ADMIN'" type="text" class="form-control" name="us_correo" #exp_ruc="ngModel"
+                                    [(ngModel)]="usuario.us_correo" placeholder="Correo" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Telefono</label>
+                                <input *ngIf="add" type="text" class="form-control" name="us_telefono" #exp_direccion="ngModel"
+                                    [(ngModel)]="usuario.us_telefono" placeholder="Telefono">
+                                <input *ngIf="!add && identity.us_id == usuario.us_id" type="text" class="form-control" name="us_telefono" #exp_direccion="ngModel"
+                                    [(ngModel)]="usuario.us_telefono" placeholder="Telefono">
+                                <input *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol != 'ADMIN'" type="text" class="form-control" name="us_telefono" #exp_direccion="ngModel"
+                                    [(ngModel)]="usuario.us_telefono" placeholder="Telefono">
+                                <input *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol == 'ADMIN'" type="text" class="form-control" name="us_telefono" #exp_direccion="ngModel"
+                                    [(ngModel)]="usuario.us_telefono" placeholder="Telefono" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Género</label>
+                                <select *ngIf="add" name="us_genero" [(ngModel)]="usuario.us_genero" class="form-control" required>
+                                    <option value="Femenino">Femenino</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                                <select *ngIf="!add && identity.us_id == usuario.us_id" name="us_genero" [(ngModel)]="usuario.us_genero" class="form-control" required>
+                                    <option value="Femenino">Femenino</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                                <select *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol != 'ADMIN'" name="us_genero" [(ngModel)]="usuario.us_genero" class="form-control" required>
+                                    <option value="Femenino">Femenino</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                                <select *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol == 'ADMIN'" name="us_genero" [(ngModel)]="usuario.us_genero" class="form-control" disabled>
+                                    <option value="Femenino">Femenino</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Rol</label>
+                                <select *ngIf="add" name="us_rol" [(ngModel)]="usuario.us_rol" class="form-control"
+                                    required>
+                                    <option value="ADMIN">Administrador</option>
+                                    <option value="USER">Usuario</option>
+                                </select>
+                                <select *ngIf="!add && identity.us_id == usuario.us_id" name="us_rol"
+                                    [(ngModel)]="usuario.us_rol" class="form-control" required>
+                                    <option value="ADMIN">Administrador</option>
+                                    <option value="USER">Usuario</option>
+                                </select>
+                                <select *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol != 'ADMIN'" name="us_rol"
+                                    [(ngModel)]="usuario.us_rol" class="form-control" required>
+                                    <option value="ADMIN">Administrador</option>
+                                    <option value="USER">Usuario</option>
+                                </select>
+                                <select *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol == 'ADMIN'" name="us_rol"
+                                    [(ngModel)]="usuario.us_rol" class="form-control" disabled>
+                                    <option value="ADMIN">Administrador</option>
+                                    <option value="USER">Usuario</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Clave</label>
+                                <input *ngIf="add" type="password" class="form-control" name="us_clave"
+                                    #exp_telefono2="ngModel" [(ngModel)]="usuario.us_clave" placeholder="Clave">
+                                <input *ngIf="!add && identity.us_id == usuario.us_id"
+                                    type="password" class="form-control" name="us_clave" #exp_telefono2="ngModel"
+                                    [(ngModel)]="usuario.us_clave" placeholder="Clave">
+                                <input *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol != 'ADMIN'" type="password"
+                                    class="form-control" name="us_clave" #exp_telefono2="ngModel"
+                                    [(ngModel)]="usuario.us_clave" placeholder="Clave" readonly>
+                                <input *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol == 'ADMIN'" type="password"
+                                    class="form-control" name="us_clave" #exp_telefono2="ngModel"
+                                    [(ngModel)]="usuario.us_clave" placeholder="Clave" readonly>
+                            </div>
+                            <button *ngIf="add" type="button" class="btn bg-primary" (click)="addUsuario(usuarioForm)">
+                                <i class="fas fa-plus"></i> Agregar usuario
+                            </button>
+                            <button *ngIf="!add && identity.us_id == usuario.us_id" type="button" class="btn bg-primary"
+                                (click)="editUsuario(usuarioForm, usuario.us_id)">
+                                <i class="fas fa-edit"></i> Editar usuario
+                            </button>
+                            <button *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol != 'ADMIN'" type="button" class="btn bg-primary"
+                                (click)="editUsuario(usuarioForm, usuario.us_id)">
+                                <i class="fas fa-edit"></i> Editar usuario
+                            </button>
+                            <button *ngIf="!add && identity.us_id != usuario.us_id && usuario.us_rol == 'ADMIN'" type="button" class="btn bg-primary"
+                                (click)="editUsuario(usuarioForm, usuario.us_id)" disabled>
+                                <i class="fas fa-edit"></i> Editar usuario
+                            </button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabla de usuarios</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" title="Agregar" (click)="actions('add', null)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Correo</th>
+                                    <th>Teléfono</th>
+                                    <th>Genero</th>
+                                    <th>Rol</th>
+                                    <th>Clave</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let u of usuario2">
+                                    <td>{{u.us_id}}</td>
+                                    <td>{{u.us_nombres}}</td>
+                                    <td>{{u.us_apellidos}}</td>
+                                    <td>{{u.us_correo}}</td>
+                                    <td>{{u.us_telefono}}</td>
+                                    <td>{{u.us_genero}}</td>
+                                    <td>{{u.us_rol}}</td>
+                                    <td class="hidetext">{{u.us_clave}}</td>
+
+                                    <td>
+                                        <a> {{""}}</a>
+                                        <a title="Editar" (click)="actions('edit', u.us_id)"
+                                            class="btn btn-xs bg-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a> {{""}}</a>
+                                        <a title="Eliminar" (click)="guardarTempId(u.us_id)"
+                                            class="btn btn-xs bg-danger" data-toggle="modal" data-target="#modal-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Correo</th>
+                                    <th>Teléfono</th>
+                                    <th>Genero</th>
+                                    <th>Rol</th>
+                                    <th>Clave</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+
+    <div class="modal fade" id="modal-sm">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content bg-danger">
+                <div class="modal-header">
+                    <h4 class="modal-title">Borrar usuario</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de borrar al usuario?</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+                    <button type="button" (click)="deleteUsuario(temp_id)" class="btn btn-outline-light"
+                        data-dismiss="modal">Borrar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>

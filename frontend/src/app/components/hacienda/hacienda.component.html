@@ -1,0 +1,169 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Haciendas</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                    <li class="breadcrumb-item active">Haciendas</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary" *ngIf="crud">
+                    <div class="card-header">
+                        <h3 class="card-title" *ngIf="add">Agregar hacienda</h3>
+                        <h3 class="card-title" *ngIf="!add">Editar hacienda {{hacienda.hac_id}}</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" (click)="crud=false"><i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form #haciendaForm="ngForm">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" name="nombre" #exp_nombre="ngModel"
+                                    [(ngModel)]="hacienda.hac_nombre" placeholder="Nombre">
+                            </div>
+                            <div class="form-group">
+                                <label>Hectareas</label>
+                                <input type="text" class="form-control" name="hectareas" #exp_descripcion="ngModel"
+                                    [(ngModel)]="hacienda.hac_hectareas" placeholder="Hectareas" />
+                            </div>
+                            <div class="form-group">
+                                <label>Localidad</label>
+                                <input type="text" class="form-control" name="localidad" #exp_ruc="ngModel"
+                                    [(ngModel)]="hacienda.hac_localidad" placeholder="Localidad">
+                            </div>
+                            <div class="form-group">
+                                <label>Sector</label>
+                                <input type="text" class="form-control" name="sector" #exp_direccion="ngModel"
+                                    [(ngModel)]="hacienda.hac_sector" placeholder="Sector">
+                            </div>
+                            <div class="form-group">
+                                <label>Provincia</label>
+                                <input type="text" class="form-control" name="provincia" #exp_telefono1="ngModel"
+                                    [(ngModel)]="hacienda.hac_provincia" placeholder="Provincia">
+                            </div>
+                            <button *ngIf="add" type="button" class="btn bg-primary" (click)="addHacienda(haciendaForm)">
+                                <i class="fas fa-plus"></i> Agregar hacienda
+                            </button>
+                            <button *ngIf="!add" type="button" class="btn bg-primary"
+                                (click)="editHacienda(haciendaForm, hacienda.hac_id)">
+                                <i class="fas fa-edit"></i> Editar hacienda
+                            </button>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabla de haciendas</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" title="Agregar" (click)="actions('add', null)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Hectareas</th>
+                                    <th>Localidad</th>
+                                    <th>Sector</th>
+                                    <th>Provincia</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let h of hacienda2">
+                                    <td>{{h.hac_id}}</td>
+                                    <td>{{h.hac_nombre}}</td>
+                                    <td>{{h.hac_hectareas}}</td>
+                                    <td>{{h.hac_localidad}}</td>
+                                    <td>{{h.hac_sector}}</td>
+                                    <td>{{h.hac_provincia}}</td>
+
+                                    <td>
+                                        <a> {{""}}</a>
+                                        <a title="Editar" (click)="actions('edit', h.hac_id)"
+                                            class="btn btn-xs bg-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a> {{""}}</a>
+                                        <a *ngIf="identity.us_rol == 'ADMIN'" title="Eliminar" (click)="guardarTempId(h.hac_id)" class="btn btn-xs bg-danger"
+                                            data-toggle="modal" data-target="#modal-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Hectareas</th>
+                                    <th>Localidad</th>
+                                    <th>Sector</th>
+                                    <th>Provincia</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+
+    <div class="modal fade" id="modal-sm">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content bg-danger">
+                <div class="modal-header">
+                    <h4 class="modal-title">Borrar hacienda</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de borrar la hacienda?</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+                    <button type="button" (click)="deleteHacienda(temp_id)" class="btn btn-outline-light"
+                        data-dismiss="modal">Borrar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>

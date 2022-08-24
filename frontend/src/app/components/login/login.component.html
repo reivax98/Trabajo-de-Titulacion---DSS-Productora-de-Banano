@@ -1,0 +1,48 @@
+<body class="hold-transition login-page" style="background-image:  url('assets/img/finca-banano.jpg'); background-size: cover; background-position: center;">
+    <div class="login-box"  style="background: rgb(119,221,102); background: linear-gradient(90deg, rgba(119,221,102,1) 0%, rgba(167,233,156,1) 50%, rgba(215,244,210,1) 100%);">
+        <div class="login-logo">
+          <a href="#"><b>Tierra</b> Prometida</a>
+        </div>
+        <div class="alert alert-danger" *ngIf="status == 'error'">
+          No te has podido identificar correctamente
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+          <div class="card-body login-card-body">
+            <p class="login-box-msg">Ingrese sus datos</p>
+      
+            <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+              <div class="input-group mb-3">
+                <input type="text" name="us_correo" #us_correo="ngModel" [(ngModel)]="user.us_correo" class="form-control" placeholder="Correo" required autofocus>
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <input type="password" name="us_clave" #us_clave="ngModel" [(ngModel)]="user.us_clave" class="form-control" placeholder="Contraseña" required>
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                  </div>
+                </div>
+              </div>
+                <!-- /.col -->
+                <div class="text-center mb-3">
+                  <button class="btn btn-primary btn-block" [disabled]="!loginForm.form.valid">Iniciar Sesión</button>                  
+                </div>
+                <!-- /.col -->
+            </form>
+            <div></div>
+            <p class="mb-1">
+              <a [routerLink]="['/forgot-password']">Olvide mi contraseña</a>
+            </p>
+            
+          </div>
+          <!-- /.login-card-body -->
+        </div>
+     </div>
+      <!-- /.login-box -->
+    
+</body>

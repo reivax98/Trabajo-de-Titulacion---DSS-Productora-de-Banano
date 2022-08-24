@@ -1,0 +1,90 @@
+<body class="hold-transition register-page">
+    <div class="register-box">
+        <div class="register-logo">
+            <a><b>Bana</b>Soft</a>
+        </div>
+
+        <div class="card">
+            <div class="card-body register-card-body">
+                <p class="login-box-msg">Registrar un nuevo usuario</p>
+
+                <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+                    <div class="input-group mb-3">
+                        <input type="name" name="nombre" #nombre="ngModel" [(ngModel)]="user.us_nombres" class="form-control" placeholder="Nombres">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="name" name="apellido" #apellido="ngModel" [(ngModel)]="user.us_apellidos" class="form-control" placeholder="Apellidos">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" name="email" #nick="ngModel" [(ngModel)]="user.us_correo" class="form-control" placeholder="Nick">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" name="email" #email="ngModel" [(ngModel)]="user.us_telefono" class="form-control" placeholder="Email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name="telefono" #telefono="ngModel" [(ngModel)]="user.us_genero" class="form-control" placeholder="Número de telefono">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-phone"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <select name="rol" [(ngModel)]="user.us_rol" class="form-control" required>
+                            <option value="" disabled selected hidden>Seleccione un rol:</option>
+                            <option value="ADMIN">Administrador</option>
+                            <option value="USER">Usuario</option>
+                        </select>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-archive"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" name="clave" #clave="ngModel" [(ngModel)]="user.us_clave" class="form-control" placeholder="Contraseña">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" name="claveconf" [(ngModel)]="claveconf" class="form-control" placeholder="Vuelva a ingresar la contraseña">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-block btn-primary">Registrar usuario</button>
+                    </div>
+                </form>
+
+            </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
+    </div>
+    <!-- /.register-box -->
+</body>
