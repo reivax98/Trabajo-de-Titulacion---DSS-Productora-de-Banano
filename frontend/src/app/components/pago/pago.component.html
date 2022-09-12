@@ -1,218 +1,213 @@
 <section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Pagos</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                    <li class="breadcrumb-item active">Pagos</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Pagos</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+          <li class="breadcrumb-item active">Pagos</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
 </section>
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-primary" *ngIf="crud">
-                    <div class="card-header">
-                        <h3 class="card-title" *ngIf="add">Agregar pago</h3>
-                        <h3 class="card-title" *ngIf="!add">Editar pago Nro {{pago.pag_id}}</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" (click)="crud=false"><i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <form #pagoForm="ngForm">
-                            <div class="form-group">
-                                <label>Semana</label>
-                                <select name="semana" [(ngModel)]="pago.pag_semana" class="form-control" required>
-                                    <option value={{s}} *ngFor="let s of num_semanas">{{s}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Fecha</label>
-                                <input type="date" class="form-control" name="exp_descripcion"
-                                    #exp_descripcion="ngModel" [(ngModel)]="pago.fecha" placeholder="Fecha" />
-                            </div>
-                            <div class="form-group">
-                                <label>Tipo</label>
-                                <select name="tipo" [(ngModel)]="pago.pag_tipo" class="form-control">
-                                    <option value="" disabled selected hidden>Seleccione una opción:</option>
-                                    <option value="ROL DE PAGO CUADRILLA">ROL DE PAGO CUADRILLA</option>
-                                    <option value="ROL DE PAGO FAMILIA">ROL DE PAGO FAMILIA</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Empleado</label>
-                                <select name="empleado" [(ngModel)]="pago.emp_nombre_completo" class="form-control">
-                                    <option value={{e.emp_nombre_completo}} *ngFor="let e of empleado">
-                                        {{e.emp_nombre_completo}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Monto</label>
-                                <input type="number" class="form-control" name="exp_telefono2" #exp_telefono2="ngModel"
-                                    [(ngModel)]="pago.pag_monto" placeholder="Monto">
-                            </div>
-                            <button *ngIf="add" type="button" class="btn bg-primary" (click)="addPago(pagoForm)">
-                                <i class="fas fa-plus"></i> Agregar pago
-                            </button>
-                            <button *ngIf="!add" type="button" class="btn bg-primary"
-                                (click)="editPago(pagoForm, pago.pag_id)">
-                                <i class="fas fa-edit"></i> Editar pago
-                            </button>
-                        </form>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-
-                <div class="card card-primary" *ngIf="rep">
-                    <div class="card-header">
-                        <h3 class="card-title">Generar reporte</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" (click)="rep=false"><i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <form #pagoForm="ngForm">
-                            <div class="form-group">
-                                <label>Año</label>
-                                <select name="anio" [(ngModel)]="an" class="form-control" required>
-                                    <option value="" disabled selected hidden>Seleccione un año:</option>
-                                    <option value={{a.anio}} *ngFor="let a of anios">{{a.anio}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Semana</label>
-                                <select name="semana" [(ngModel)]="sem" class="form-control" required>
-                                    <option value="" disabled selected hidden>Seleccione una semana:</option>
-                                    <option value={{s.pag_semana}} *ngFor="let s of semanas">{{s.pag_semana}}</option>
-                                </select>
-                            </div>
-                            <button type="button" class="btn bg-primary" (click)="createPDF(sem,an)">
-                                <i class="fas fa-file-pdf"></i> Generar PDF
-                            </button>
-                        </form>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Tabla de pagos</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" title="Generar reporte semanal"
-                                (click)="cerrarInterfaces()">
-                                <i class="fas fa-file-pdf"></i>
-                            </button>
-                            <a> {{""}}</a>
-                            <button type="button" class="btn btn-tool" title="Agregar pago"
-                                (click)="actions('add', null)">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-bordered text-center">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Semana</th>
-                                    <th>Fecha</th>
-                                    <th>Tipo</th>
-                                    <th>Empleado</th>
-                                    <th>Monto</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let p of pago2 | paginate: { itemsPerPage: 10, currentPage: page }">
-                                    <td>{{p.pag_id}}</td>
-                                    <td>{{p.pag_semana}}</td>
-                                    <td>{{p.fecha}}</td>
-                                    <td>{{p.pag_tipo}}</td>
-                                    <td>{{p.emp_nombre_completo}}</td>
-                                    <td>{{p.pag_monto}}</td>
-
-                                    <td>
-                                        <a> {{""}}</a>
-                                        <a title="Editar" (click)="actions('edit', p.pag_id)"
-                                            class="btn btn-xs bg-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a> {{""}}</a>
-                                        <a *ngIf="identity.us_rol==='ADMIN'" title="Eliminar"
-                                            (click)="guardarTempId(p.pag_id)" class="btn btn-xs bg-danger"
-                                            data-toggle="modal" data-target="#modal-sm">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Semana</th>
-                                    <th>Fecha</th>
-                                    <th>Tipo</th>
-                                    <th>Empleado</th>
-                                    <th>Monto</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer clearfix">
-                        <ul class="m-0 float-right">
-                            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
-                                nextLabel="Siguiente"></pagination-controls>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /.card -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-primary" *ngIf="crud">
+          <div class="card-header">
+            <h3 class="card-title" *ngIf="add">Agregar pago</h3>
+            <h3 class="card-title" *ngIf="!add">Editar pago Nro {{pago.pag_id}}</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" (click)="crud=false"><i class="fas fa-times"></i>
+              </button>
             </div>
-            <!-- /.col -->
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <form #pagoForm="ngForm">
+              <div class="form-group">
+                <label>Semana</label>
+                <select name="semana" [(ngModel)]="pago.pag_semana" class="form-control" required>
+                  <option value={{s}} *ngFor="let s of num_semanas">{{s}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Fecha</label>
+                <input type="date" class="form-control" name="pag_fecha" #pag_fecha="ngModel"
+                  [(ngModel)]="pago.fecha" placeholder="Fecha" />
+              </div>
+              <div class="form-group">
+                <label>Tipo</label>
+                <select name="tipo" [(ngModel)]="pago.pag_tipo" class="form-control">
+                  <option value="" disabled selected hidden>Seleccione una opción:</option>
+                  <option value="ROL DE PAGO CUADRILLA">ROL DE PAGO CUADRILLA</option>
+                  <option value="ROL DE PAGO FAMILIA">ROL DE PAGO FAMILIA</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Empleado</label>
+                <select name="pag_empleado" #pag_empleado="ngModel" [(ngModel)]="pago.emp_nombre_completo" class="form-control">
+                  <option value={{e.emp_nombre_completo}} *ngFor="let e of empleado">
+                    {{e.emp_nombre_completo}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Monto</label>
+                <input type="number" class="form-control" name="pag_monto" #pag_monto="ngModel"
+                  [(ngModel)]="pago.pag_monto" placeholder="Monto">
+              </div>
+              <button *ngIf="add" type="button" class="btn bg-primary" (click)="addPago(pagoForm)">
+                <i class="fas fa-plus"></i> Agregar pago
+              </button>
+              <button *ngIf="!add" type="button" class="btn bg-primary" (click)="editPago(pagoForm, pago.pag_id)">
+                <i class="fas fa-edit"></i> Editar pago
+              </button>
+            </form>
+          </div>
+          <!-- /.card-body -->
         </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
+        <!-- /.card -->
 
-    <div class="modal fade" id="modal-sm">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content bg-danger">
-                <div class="modal-header">
-                    <h4 class="modal-title">Borrar pago</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Está seguro de borrar el pago?</p>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
-                    <button type="button" (click)="deletePago(temp_id)" class="btn btn-outline-light"
-                        data-dismiss="modal">Borrar</button>
-                </div>
+        <div class="card card-primary" *ngIf="rep">
+          <div class="card-header">
+            <h3 class="card-title">Generar reporte</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" (click)="rep=false"><i class="fas fa-times"></i>
+              </button>
             </div>
-            <!-- /.modal-content -->
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <form #pagoForm="ngForm">
+              <div class="form-group">
+                <label>Año</label>
+                <select name="anio" [(ngModel)]="an" class="form-control" required>
+                  <option value="" disabled selected hidden>Seleccione un año:</option>
+                  <option value={{a.anio}} *ngFor="let a of anios">{{a.anio}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Semana</label>
+                <select name="semana" [(ngModel)]="sem" class="form-control" required>
+                  <option value="" disabled selected hidden>Seleccione una semana:</option>
+                  <option value={{s.pag_semana}} *ngFor="let s of semanas">{{s.pag_semana}}</option>
+                </select>
+              </div>
+              <button type="button" class="btn bg-primary" (click)="createPDF(sem,an)">
+                <i class="fas fa-file-pdf"></i> Generar PDF
+              </button>
+            </form>
+          </div>
+          <!-- /.card-body -->
         </div>
-        <!-- /.modal-dialog -->
+
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Tabla de pagos</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" title="Generar reporte semanal" (click)="cerrarInterfaces()">
+                <i class="fas fa-file-pdf"></i>
+              </button>
+              <a> {{""}}</a>
+              <button type="button" class="btn btn-tool" title="Agregar pago" (click)="actions('add', null)">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Semana</th>
+                  <th>Fecha</th>
+                  <th>Tipo</th>
+                  <th>Empleado</th>
+                  <th>Monto</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of pago2 | paginate: { itemsPerPage: 10, currentPage: page }">
+                  <td>{{p.pag_id}}</td>
+                  <td>{{p.pag_semana}}</td>
+                  <td>{{p.fecha}}</td>
+                  <td>{{p.pag_tipo}}</td>
+                  <td>{{p.emp_nombre_completo}}</td>
+                  <td>{{p.pag_monto}}</td>
+
+                  <td>
+                    <a> {{""}}</a>
+                    <a title="Editar" (click)="actions('edit', p.pag_id)" class="btn btn-xs bg-warning">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a> {{""}}</a>
+                    <a *ngIf="identity.us_rol==='ADMIN'" title="Eliminar" (click)="guardarTempId(p.pag_id)"
+                      class="btn btn-xs bg-danger" data-toggle="modal" data-target="#modal-sm">
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Id</th>
+                  <th>Semana</th>
+                  <th>Fecha</th>
+                  <th>Tipo</th>
+                  <th>Empleado</th>
+                  <th>Monto</th>
+                  <th>Acciones</th>
+                </tr>
+              </tfoot>
+            </table>
+
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            <ul class="m-0 float-right">
+              <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+              </pagination-controls>
+            </ul>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
     </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+
+  <div class="modal fade" id="modal-sm">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content bg-danger">
+        <div class="modal-header">
+          <h4 class="modal-title">Borrar pago</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>¿Está seguro de borrar el pago?</p>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+          <button type="button" (click)="deletePago(temp_id)" class="btn btn-outline-light"
+            data-dismiss="modal">Borrar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
 </section>

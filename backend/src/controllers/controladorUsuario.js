@@ -10,6 +10,7 @@ const controller = {};
 controller.login = (req, res) => {
     //obtiene los datos
     const { us_correo, us_clave } = req.body;
+    console.log(us_correo + ' ' + us_clave)
     let usuario = usuarioModel.obtenerPorEmail(us_correo);
     usuario.then(function (user) {
         if (user) {
@@ -111,10 +112,10 @@ controller.forgotPassword = async (req, res) => {
 
             try {
                 let transport = nodemailer.createTransport({
-                    service: "gmail",
+                    service: 'gmail',
                     auth: {
-                        user: "Correo usado para enviar el mensaje",
-                        pass: "Contraseña"
+                        user: "banasoft.adm2022@gmail.com",
+                        pass: "ldsyvycsmbkkoubf"
                     },
                     tls: {
                         rejectUnauthorized: false
@@ -122,7 +123,7 @@ controller.forgotPassword = async (req, res) => {
                 });
 
                 let message_email = {
-                    from: "Correo usado para enviar el mensaje",
+                    from: "banasoft.adm2022@gmail.com",
                     to: us_correo,
                     subject: "Solicitud de cambio de contraseña",
                     text: "Ingrese al siguiente enlace para cambiar su contraseña: " + verificationLink
@@ -142,7 +143,6 @@ controller.forgotPassword = async (req, res) => {
             }
 
             try {
-                console.log('hola')
                 await usuarioModel.agregarResetToken(user.us_id, user.us_resettoken);
             } catch (error) {
                 emailstatus = error;
@@ -181,6 +181,7 @@ controller.createNewPassword = async (req, res) => {
         }
 
     } catch {
+        console.log('clave error')
         return res.status(500).send({ message: 'Solicitud de cambio no existente' })
     }
 

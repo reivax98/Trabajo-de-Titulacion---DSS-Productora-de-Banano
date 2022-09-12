@@ -1,310 +1,308 @@
 <section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Facturación</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                    <li class="breadcrumb-item active">Facturación</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Facturación</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+          <li class="breadcrumb-item active">Facturación</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
 </section>
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-primary" *ngIf="crud">
-                    <div class="card-header">
-                        <h3 class="card-title" *ngIf="add">Agregar factura</h3>
-                        <h3 class="card-title" *ngIf="!add">Editar factura Nro {{facturacion.fac_id}}</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" (click)="crud=false"><i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <form #facturacionForm="ngForm">
-                            <div class="form-group">
-                                <label>Id</label>
-                                <input *ngIf="add" type="text" class="form-control" name="fac_id" #exp_nombre="ngModel"
-                                    [(ngModel)]="facturacion.fac_id" placeholder="ID">
-                                <input *ngIf="!add" type="text" class="form-control" name="fac_id" #exp_nombre="ngModel"
-                                    [(ngModel)]="facturacion.fac_id" placeholder="ID" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>Exportadora</label> 
-                                <select name="exp_nombre" [(ngModel)]="facturacion.exp_nombre"  (change)="getIdExp()" class="form-control">
-                                    <option value={{e.exp_nombre}} *ngFor="let e of exportadora" >{{e.exp_nombre}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Semana</label>
-                                <select name="semana" [(ngModel)]="facturacion.fac_semana" class="form-control" required>
-                                    <option value={{s}} *ngFor="let s of semanas" >{{s}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Fecha</label>
-                                <input type="date" class="form-control" name="exp_direccion" #exp_direccion="ngModel"
-                                    [(ngModel)]="facturacion.fecha" value = {{nuevafecha}} min="2020-01-01" placeholder="Fecha">
-                            </div>
-                            <div class="form-group">
-                                <label>Descuento</label>
-                                <input type="number" class="form-control" name="exp_telefono1" #exp_telefono1="ngModel"
-                                    [(ngModel)]="facturacion.fac_descuento" placeholder="Descuento">
-                            </div>
-                            <div class="form-group">
-                                <label>Estado</label>
-                                <select name="estado" [(ngModel)]="facturacion.fac_estado" class="form-control" required>
-                                    <option value="Activa">Activa</option>
-                                    <option value="Anulada" >Anulada</option>
-                                </select>
-                            </div>
-                            <button *ngIf="add" type="button" class="btn bg-primary" (click)="addFacturacion(facturacionForm)">
-                                <i class="fas fa-plus"></i> Agregar factura
-                            </button>
-                            <button *ngIf="!add" type="button" class="btn bg-primary"
-                                (click)="editFacturacion(facturacionForm, facturacion.fac_id)">
-                                <i class="fas fa-edit"></i> Editar factura
-                            </button>
-                        </form>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-
-                <!--AGREGAR DETALLE-->
-                <div class="card card-primary" *ngIf="crud_det">
-                    <div class="card-header">
-                        <h3 class="card-title" *ngIf="add_det">Agregar detalle factura {{facturacion.fac_id}}</h3>
-                        <h3 class="card-title" *ngIf="!add_det">Editar detalle factura {{facturacion.fac_id}}</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" (click)="crud_det=false"><i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <form #facturacionDetForm="ngForm">
-                            <div class="form-group">
-                                <label>Código Programa</label>
-                                <input type="text" class="form-control" name="codigo" #exp_descripcion="ngModel"
-                                    [(ngModel)]="detalle3.facdet_cod_prog" placeholder="Exportadora" />
-                            </div>
-                            <div class="form-group">
-                                <label>Hacienda</label>
-                                <select name="hac_nombre" [(ngModel)]="detalle3.hac_nombre" class="form-control">
-                                    <option value={{h.hac_nombre}} *ngFor="let h of hacienda" >{{h.hac_nombre}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Tipo de caja</label>
-                                <select name="tipcaj_nombre" [(ngModel)]="detalle3.tipcaj_nombre" class="form-control">
-                                    <option value={{tc.tipcaj_nombre}} *ngFor="let tc of tipocaja" >{{tc.tipcaj_nombre}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Marca</label>
-                                <select name="mar_nombre" [(ngModel)]="detalle3.mar_nombre" class="form-control">
-                                    <option value={{m.mar_nombre}} *ngFor="let m of marca" >{{m.mar_nombre}}</option>  
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Cantidad</label>
-                                <input type="number" class="form-control" name="cantidad" #exp_telefono1="ngModel"
-                                    [(ngModel)]="detalle3.facdet_cantidad" placeholder="Cantidad">
-                            </div>
-                            <div class="form-group">
-                                <label>Precio unitario</label>
-                                <input type="number" class="form-control" name="preciounitario" #exp_telefono1="ngModel"
-                                    [(ngModel)]="detalle3.facdet_precio_unitario" placeholder="Precio Unitario">
-                            </div>
-                            <button *ngIf="add_det" type="button" class="btn bg-primary" (click)="addDetalleFacturacion(facturacionDetForm, facturacion.fac_id)">
-                                <i class="fas fa-plus"></i> Agregar detalle
-                            </button>
-                            <button *ngIf="!add_det" type="button" class="btn bg-primary"
-                                (click)="editDetalleFacturacion(facturacionDetForm, facturacion.fac_id)">
-                                <i class="fas fa-edit"></i> Editar detalle
-                            </button>
-                        </form>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Tabla de Facturación</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" title="Agregar" (click)="actions('add', null)">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-bordered text-center">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Exportadora</th>
-                                    <th>Semana</th>
-                                    <th>Fecha</th>
-                                    <th>Descuento</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let f of facturacion2 | paginate: { itemsPerPage: 10, currentPage: page }">
-                                    <td>{{f.fac_id}}</td>
-                                    <td>{{f.exp_nombre}}</td>
-                                    <td>{{f.fac_semana}}</td>
-                                    <td>{{f.fecha}}</td>
-                                    <td>{{f.fac_descuento}}</td>
-                                    <td>{{f.fac_estado}}</td>
-
-                                    <td>
-                                        <a> {{""}}</a>
-                                        <a title="Editar" (click)="actions('edit', f.fac_id)"
-                                            class="btn btn-xs bg-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a> {{""}}</a>
-                                        <a *ngIf="f.fac_estado =='Activa'" title="Agregar detalle" 
-                                            class="btn btn-xs bg-gray" (click)="actionsDet('add', f.fac_id)">
-                                            <i class="fas fa-clipboard-list"></i>
-                                        </a>
-                                        <a> {{""}}</a>
-                                        <a *ngIf="f.fac_estado =='Activa'" title="Ver detalle" 
-                                            class="btn btn-xs bg-primary" (click)="detalleFac(f.fac_id)" data-toggle="modal" data-target="#modal-det">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a> {{""}}</a>
-                                        <a *ngIf="f.fac_estado =='Activa'" title="Generar PDF" 
-                                            class="btn btn-xs bg-success" (click)="createPDF(f.fac_id)">
-                                            <i class="fas fa-file-pdf"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Exportadora</th>
-                                    <th>Semana</th>
-                                    <th>Fecha</th>
-                                    <th>Descuento</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer clearfix">
-                        <ul class="m-0 float-right">
-                            <pagination-controls 
-                            (pageChange)="page = $event" 
-                            previousLabel="Anterior"
-                            nextLabel="Siguiente"
-                            ></pagination-controls>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /.card -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-primary" *ngIf="crud">
+          <div class="card-header">
+            <h3 class="card-title" *ngIf="add">Agregar factura</h3>
+            <h3 class="card-title" *ngIf="!add">Editar factura Nro {{facturacion.fac_id}}</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" (click)="crud=false"><i class="fas fa-times"></i>
+              </button>
             </div>
-            <!-- /.col -->
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <form #facturacionForm="ngForm">
+              <div class="form-group">
+                <label>Id</label>
+                <input *ngIf="add" type="text" class="form-control" name="fac_id" #fac_id="ngModel"
+                  [(ngModel)]="facturacion.fac_id" placeholder="ID">
+                <input *ngIf="!add" type="text" class="form-control" name="fac_id" #fac_id="ngModel"
+                  [(ngModel)]="facturacion.fac_id" placeholder="ID" readonly>
+              </div>
+              <div class="form-group">
+                <label>Exportadora</label>
+                <select name="exp_nombre" [(ngModel)]="facturacion.exp_nombre" (change)="getIdExp()"
+                  class="form-control">
+                  <option value={{e.exp_nombre}} *ngFor="let e of exportadora">{{e.exp_nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Semana</label>
+                <select name="semana" [(ngModel)]="facturacion.fac_semana" class="form-control" required>
+                  <option value={{s}} *ngFor="let s of semanas">{{s}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Fecha</label>
+                <input type="date" class="form-control" name="fac_fecha" #fac_fecha="ngModel"
+                  [(ngModel)]="facturacion.fecha" value={{nuevafecha}} min="2020-01-01" placeholder="Fecha">
+              </div>
+              <div class="form-group">
+                <label>Descuento</label>
+                <input type="number" class="form-control" name="fac_descuento" #fac_descuento="ngModel"
+                  [(ngModel)]="facturacion.fac_descuento" placeholder="Descuento">
+              </div>
+              <div class="form-group">
+                <label>Estado</label>
+                <select name="estado" [(ngModel)]="facturacion.fac_estado" class="form-control" required>
+                  <option value="Activa">Activa</option>
+                  <option value="Anulada">Anulada</option>
+                </select>
+              </div>
+              <button *ngIf="add" type="button" class="btn bg-primary" (click)="addFacturacion(facturacionForm)">
+                <i class="fas fa-plus"></i> Agregar factura
+              </button>
+              <button *ngIf="!add" type="button" class="btn bg-primary"
+                (click)="editFacturacion(facturacionForm, facturacion.fac_id)">
+                <i class="fas fa-edit"></i> Editar factura
+              </button>
+            </form>
+          </div>
+          <!-- /.card-body -->
         </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
+        <!-- /.card -->
 
-    <div class="modal fade" id="modal-sm">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content bg-danger">
-                <div class="modal-header">
-                    <h4 class="modal-title">Borrar exportadora</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Está seguro de borrar la exportadora?</p>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
-                    <button type="button" (click)="deleteFacturacion(temp_id)" class="btn btn-outline-light"
-                        data-dismiss="modal">Borrar</button>
-                </div>
+        <!--AGREGAR DETALLE-->
+        <div class="card card-primary" *ngIf="crud_det">
+          <div class="card-header">
+            <h3 class="card-title" *ngIf="add_det">Agregar detalle factura {{facturacion.fac_id}}</h3>
+            <h3 class="card-title" *ngIf="!add_det">Editar detalle factura {{facturacion.fac_id}}</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" (click)="crud_det=false"><i class="fas fa-times"></i>
+              </button>
             </div>
-            <!-- /.modal-content -->
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <form #facturacionDetForm="ngForm">
+              <div class="form-group">
+                <label>Código Programa</label>
+                <input type="text" class="form-control" name="det_codigo" #det_codigo="ngModel"
+                  [(ngModel)]="detalle3.facdet_cod_prog" placeholder="Exportadora" />
+              </div>
+              <div class="form-group">
+                <label>Hacienda</label>
+                <select name="hac_nombre" [(ngModel)]="detalle3.hac_nombre" class="form-control">
+                  <option value={{h.hac_nombre}} *ngFor="let h of hacienda">{{h.hac_nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Tipo de caja</label>
+                <select name="tipcaj_nombre" [(ngModel)]="detalle3.tipcaj_nombre" class="form-control">
+                  <option value={{tc.tipcaj_nombre}} *ngFor="let tc of tipocaja">{{tc.tipcaj_nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Marca</label>
+                <select name="mar_nombre" [(ngModel)]="detalle3.mar_nombre" class="form-control">
+                  <option value={{m.mar_nombre}} *ngFor="let m of marca">{{m.mar_nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Cantidad</label>
+                <input type="number" class="form-control" name="cantidad" #exp_telefono1="ngModel"
+                  [(ngModel)]="detalle3.facdet_cantidad" placeholder="Cantidad">
+              </div>
+              <div class="form-group">
+                <label>Precio unitario</label>
+                <input type="number" class="form-control" name="preciounitario" #exp_telefono1="ngModel"
+                  [(ngModel)]="detalle3.facdet_precio_unitario" placeholder="Precio Unitario">
+              </div>
+              <button *ngIf="add_det" type="button" class="btn bg-primary"
+                (click)="addDetalleFacturacion(facturacionDetForm, facturacion.fac_id)">
+                <i class="fas fa-plus"></i> Agregar detalle
+              </button>
+              <button *ngIf="!add_det" type="button" class="btn bg-primary"
+                (click)="editDetalleFacturacion(facturacionDetForm, facturacion.fac_id)">
+                <i class="fas fa-edit"></i> Editar detalle
+              </button>
+            </form>
+          </div>
+          <!-- /.card-body -->
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <div class="modal fade" id="modal-det">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content bg-primary">
-                <div class="modal-header">
-                    <h4 class="modal-title">Detalle factura {{det_id}}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-bordered text-center">
-                            <thead>
-                                <tr>
-                                    <th>Código programa</th>
-                                    <th>Hacienda</th>
-                                    <th>Tipo de caja</th>
-                                    <th>Marca</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio unitario</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let d of detalle">
-                                    <td>{{d.facdet_cod_prog}}</td>
-                                    <td>{{d.hac_nombre}}</td>
-                                    <td>{{d.tipcaj_nombre}}</td>
-                                    <td>{{d.mar_nombre}}</td>
-                                    <td>{{d.facdet_cantidad}}</td>
-                                    <td>{{d.facdet_precio_unitario}}</td>
+        <!-- /.card -->
 
-                                    <td>
-                                        <a> {{""}}</a>
-                                        <a title="Editar" (click)="actionsDet('edit', d.fac_id)"
-                                            class="btn btn-xs bg-warning" data-dismiss="modal" aria-label="Close">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
-                    <h4>Valor total: {{vtotal}}</h4>
-                </div>
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Tabla de Facturación</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" title="Agregar" (click)="actions('add', null)">
+                <i class="fas fa-plus"></i>
+              </button>
             </div>
-            <!-- /.modal-content -->
+          </div>
+
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Exportadora</th>
+                  <th>Semana</th>
+                  <th>Fecha</th>
+                  <th>Descuento</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let f of facturacion2 | paginate: { itemsPerPage: 10, currentPage: page }">
+                  <td>{{f.fac_id}}</td>
+                  <td>{{f.exp_nombre}}</td>
+                  <td>{{f.fac_semana}}</td>
+                  <td>{{f.fecha}}</td>
+                  <td>{{f.fac_descuento}}</td>
+                  <td>{{f.fac_estado}}</td>
+
+                  <td>
+                    <a> {{""}}</a>
+                    <a title="Editar" (click)="actions('edit', f.fac_id)" class="btn btn-xs bg-warning">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a> {{""}}</a>
+                    <a *ngIf="f.fac_estado =='Activa'" title="Agregar detalle" class="btn btn-xs bg-gray"
+                      (click)="actionsDet('add', f.fac_id)">
+                      <i class="fas fa-clipboard-list"></i>
+                    </a>
+                    <a> {{""}}</a>
+                    <a *ngIf="f.fac_estado =='Activa'" title="Ver detalle" class="btn btn-xs bg-primary"
+                      (click)="detalleFac(f.fac_id)" data-toggle="modal" data-target="#modal-det">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                    <a> {{""}}</a>
+                    <a *ngIf="f.fac_estado =='Activa'" title="Generar PDF" class="btn btn-xs bg-success"
+                      (click)="createPDF(f.fac_id)">
+                      <i class="fas fa-file-pdf"></i>
+                    </a>
+                  </td>
+                </tr>
+
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Id</th>
+                  <th>Exportadora</th>
+                  <th>Semana</th>
+                  <th>Fecha</th>
+                  <th>Descuento</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </tfoot>
+            </table>
+
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            <ul class="m-0 float-right">
+              <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+              </pagination-controls>
+            </ul>
+          </div>
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
     </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+
+  <div class="modal fade" id="modal-sm">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content bg-danger">
+        <div class="modal-header">
+          <h4 class="modal-title">Borrar exportadora</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>¿Está seguro de borrar la exportadora?</p>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+          <button type="button" (click)="deleteFacturacion(temp_id)" class="btn btn-outline-light"
+            data-dismiss="modal">Borrar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <div class="modal fade" id="modal-det">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content bg-primary">
+        <div class="modal-header">
+          <h4 class="modal-title">Detalle factura {{det_id}}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body table-responsive p-0">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>Código programa</th>
+                  <th>Hacienda</th>
+                  <th>Tipo de caja</th>
+                  <th>Marca</th>
+                  <th>Cantidad</th>
+                  <th>Precio unitario</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let d of detalle">
+                  <td>{{d.facdet_cod_prog}}</td>
+                  <td>{{d.hac_nombre}}</td>
+                  <td>{{d.tipcaj_nombre}}</td>
+                  <td>{{d.mar_nombre}}</td>
+                  <td>{{d.facdet_cantidad}}</td>
+                  <td>{{d.facdet_precio_unitario}}</td>
+
+                  <td>
+                    <a> {{""}}</a>
+                    <a title="Editar" (click)="actionsDet('edit', d.fac_id)" class="btn btn-xs bg-warning"
+                      data-dismiss="modal" aria-label="Close">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+          <h4>Valor total: {{vtotal}}</h4>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
 </section>

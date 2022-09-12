@@ -1,4 +1,4 @@
-const conexion = require("../database").default
+const conexion = require("../database")
 module.exports = {
 
     async agregar_exportadora(nom, desc, ruc, dir, tel1, tel2){

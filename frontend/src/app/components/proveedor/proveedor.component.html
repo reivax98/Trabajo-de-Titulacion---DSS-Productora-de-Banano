@@ -1,167 +1,163 @@
 <section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Proveedores</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                    <li class="breadcrumb-item active">Proveedores</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Proveedores</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+          <li class="breadcrumb-item active">Proveedores</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
 </section>
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-primary" *ngIf="crud">
-                    <div class="card-header">
-                        <h3 class="card-title" *ngIf="add">Agregar proveedor</h3>
-                        <h3 class="card-title" *ngIf="!add">Editar proveedor {{proveedor.prov_id}}</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" (click)="crud=false"><i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <form #proveedorForm="ngForm">
-                            <div class="form-group">
-                                <label>Nombre</label>
-                                <input type="text" class="form-control" name="prov_nombre" #prov_nombre="ngModel"
-                                    [(ngModel)]="proveedor.prov_nombre" placeholder="Nombre">
-                            </div>
-                            <div class="form-group">
-                                <label>Ruc / Cédula</label>
-                                <input type="text" class="form-control" name="prov_ruc_cedula" #prov_descripcion="ngModel"
-                                    [(ngModel)]="proveedor.prov_ruc_cedula" placeholder="Ruc / Cédula" />
-                            </div>
-                            <div class="form-group">
-                                <label>Teléfono 1</label>
-                                <input type="text" class="form-control" name="prov_telefono1" #prov_telefono1="ngModel"
-                                    [(ngModel)]="proveedor.prov_telefono1" placeholder="Teléfono 1">
-                            </div>
-                            <div class="form-group">
-                                <label>Teléfono 2</label>
-                                <input type="text" class="form-control" name="prov_telefono2" #prov_telefono2="ngModel"
-                                    [(ngModel)]="proveedor.prov_telefono2" placeholder="Teléfono 2">
-                            </div>
-                            <button *ngIf="add" type="button" class="btn bg-primary" (click)="addProveedor(proveedorForm)">
-                                <i class="fas fa-plus"></i> Agregar proveedor
-                            </button>
-                            <button *ngIf="!add" type="button" class="btn bg-primary"
-                                (click)="editProveedor(proveedorForm, proveedor.prov_id)">
-                                <i class="fas fa-edit"></i> Editar proveedor
-                            </button>
-                        </form>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Tabla de proveedores</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" title="Agregar" (click)="actions('add', null)">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-bordered text-center">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Nombre</th>
-                                    <th>Ruc / Cédula</th>
-                                    <th>Teléfono 1</th>
-                                    <th>Teléfono 2</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let p of proveedor2 | paginate: { itemsPerPage: 10, currentPage: page }">
-                                    <td>{{p.prov_id}}</td>
-                                    <td>{{p.prov_nombre}}</td>
-                                    <td>{{p.prov_ruc_cedula}}</td>
-                                    <td>{{p.prov_telefono1}}</td>
-                                    <td>{{p.prov_telefono2}}</td>
-
-                                    <td>
-                                        <a> {{""}}</a>
-                                        <a title="Editar" (click)="actions('edit', p.prov_id)"
-                                            class="btn btn-xs bg-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a> {{""}}</a>
-                                        <a *ngIf="identity.us_rol == 'ADMIN'" title="Eliminar" (click)="guardarTempId(p.prov_id)" class="btn btn-xs bg-danger"
-                                            data-toggle="modal" data-target="#modal-sm">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Nombre</th>
-                                    <th>Ruc / Cédula</th>
-                                    <th>Teléfono 1</th>
-                                    <th>Teléfono 2</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer clearfix">
-                        <ul class="m-0 float-right">
-                            <pagination-controls 
-                            (pageChange)="page = $event" 
-                            previousLabel="Anterior"
-                            nextLabel="Siguiente"
-                            ></pagination-controls>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /.card -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-primary" *ngIf="crud">
+          <div class="card-header">
+            <h3 class="card-title" *ngIf="add">Agregar proveedor</h3>
+            <h3 class="card-title" *ngIf="!add">Editar proveedor {{proveedor.prov_id}}</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" (click)="crud=false"><i class="fas fa-times"></i>
+              </button>
             </div>
-            <!-- /.col -->
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <form #proveedorForm="ngForm">
+              <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" class="form-control" name="prov_nombre" #prov_nombre="ngModel"
+                  [(ngModel)]="proveedor.prov_nombre" placeholder="Nombre">
+              </div>
+              <div class="form-group">
+                <label>Ruc / Cédula</label>
+                <input type="text" class="form-control" name="prov_ruc_cedula" #prov_ruc_cedula="ngModel"
+                  [(ngModel)]="proveedor.prov_ruc_cedula" placeholder="Ruc / Cédula" />
+              </div>
+              <div class="form-group">
+                <label>Teléfono 1</label>
+                <input type="text" class="form-control" name="prov_telefono1" #prov_telefono1="ngModel"
+                  [(ngModel)]="proveedor.prov_telefono1" placeholder="Teléfono 1">
+              </div>
+              <div class="form-group">
+                <label>Teléfono 2</label>
+                <input type="text" class="form-control" name="prov_telefono2" #prov_telefono2="ngModel"
+                  [(ngModel)]="proveedor.prov_telefono2" placeholder="Teléfono 2">
+              </div>
+              <button *ngIf="add" type="button" class="btn bg-primary" (click)="addProveedor(proveedorForm)">
+                <i class="fas fa-plus"></i> Agregar proveedor
+              </button>
+              <button *ngIf="!add" type="button" class="btn bg-primary"
+                (click)="editProveedor(proveedorForm, proveedor.prov_id)">
+                <i class="fas fa-edit"></i> Editar proveedor
+              </button>
+            </form>
+          </div>
+          <!-- /.card-body -->
         </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
+        <!-- /.card -->
 
-    <div class="modal fade" id="modal-sm">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content bg-danger">
-                <div class="modal-header">
-                    <h4 class="modal-title">Borrar proveedor</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Está seguro de borrar al proveedor?</p>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
-                    <button type="button" (click)="deleteProveedor(temp_id)" class="btn btn-outline-light"
-                        data-dismiss="modal">Borrar</button>
-                </div>
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Tabla de proveedores</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" title="Agregar" (click)="actions('add', null)">
+                <i class="fas fa-plus"></i>
+              </button>
             </div>
-            <!-- /.modal-content -->
+          </div>
+
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Nombre</th>
+                  <th>Ruc / Cédula</th>
+                  <th>Teléfono 1</th>
+                  <th>Teléfono 2</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of proveedor2 | paginate: { itemsPerPage: 10, currentPage: page }">
+                  <td>{{p.prov_id}}</td>
+                  <td>{{p.prov_nombre}}</td>
+                  <td>{{p.prov_ruc_cedula}}</td>
+                  <td>{{p.prov_telefono1}}</td>
+                  <td>{{p.prov_telefono2}}</td>
+
+                  <td>
+                    <a> {{""}}</a>
+                    <a title="Editar" (click)="actions('edit', p.prov_id)" class="btn btn-xs bg-warning">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a> {{""}}</a>
+                    <a *ngIf="identity.us_rol == 'ADMIN'" title="Eliminar" (click)="guardarTempId(p.prov_id)"
+                      class="btn btn-xs bg-danger" data-toggle="modal" data-target="#modal-sm">
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Id</th>
+                  <th>Nombre</th>
+                  <th>Ruc / Cédula</th>
+                  <th>Teléfono 1</th>
+                  <th>Teléfono 2</th>
+                  <th>Acciones</th>
+                </tr>
+              </tfoot>
+            </table>
+
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            <ul class="m-0 float-right">
+              <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+              </pagination-controls>
+            </ul>
+          </div>
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
     </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+
+  <div class="modal fade" id="modal-sm">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content bg-danger">
+        <div class="modal-header">
+          <h4 class="modal-title">Borrar proveedor</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>¿Está seguro de borrar al proveedor?</p>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+          <button type="button" (click)="deleteProveedor(temp_id)" class="btn btn-outline-light"
+            data-dismiss="modal">Borrar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
 </section>

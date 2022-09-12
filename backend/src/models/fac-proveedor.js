@@ -1,4 +1,4 @@
-const conexion = require("../database").default
+const conexion = require("../database")
 module.exports = {
 
     async agregar_factura_proveedor(id, prov, sem, fec, des, fase, obs, cuen, iva, sta){

@@ -1,5 +1,4 @@
-import { Pool } from "pg";
-// Coloca aquí tus credenciales
+const { Pool } = require("pg")
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
@@ -7,7 +6,7 @@ const pool = new Pool({
   password: "root",
   port: 5432,
 });
-export default pool;
+module.exports = pool;
 
 /*
 const { Pool } = require("pg")

@@ -1,8 +1,8 @@
-export class DsEgresos{
+export class DsEgresos {
 	constructor(
 		public pag_semana: Int32Array | null,
 		public mes: string | null,
 		public anio: string,
-        public total: Float32Array | null
-	){}
+		public total: Float32Array | null
+	) { }
 }

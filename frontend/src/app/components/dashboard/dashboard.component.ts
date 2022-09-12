@@ -59,7 +59,6 @@ export class DashboardComponent implements OnInit {
   public ing_anual_anio: any;
   public ing_anual_tot: any;
   public tipo_grafico: any;
-  public meses: any[];
   public anio: number;
   @ViewChild('mychart') mychart: any;
   @ViewChild('mychart2') mychart2: any;
@@ -96,7 +95,6 @@ export class DashboardComponent implements OnInit {
     this.ing_anual_anio = null;
     this.ing_anual_tot = null;
     this.tipo_grafico = 'Semana';
-    this.meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
     this.anio = 2022;
   }
 
